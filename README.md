@@ -7,6 +7,7 @@ Auto Claim Arix coin on Teleram every 1 hour
 - [ArixDexTod](#arixdextod)
 - [Table of Contents](#table-of-contents)
 - [Features](#features)
+- [Register](#register)
 - [How to Use](#how-to-use)
   - [Windows](#windows)
   - [Linux](#linux)
@@ -20,6 +21,10 @@ Auto Claim Arix coin on Teleram every 1 hour
 - [x] Auto Claim
 - [x] Multi Account Support
 - [x] Only use Telegram Account ID
+
+# Register
+
+Click the following link to register : [https://t.me/ARIXcoin_bot?start=ref_629438076](https://t.me/ARIXcoin_bot?start=ref_629438076)
 
 # How to Use
 
