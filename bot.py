@@ -15,7 +15,6 @@ biru = Fore.LIGHTBLUE_EX
 hitam = Fore.LIGHTBLACK_EX
 reset = Style.RESET_ALL
 
-
 class ArixDexTod:
     def __init__(self):
         self.headers = {
@@ -40,12 +39,12 @@ class ArixDexTod:
         return tetod
 
     def get_user(self, id):
-        url = "https://miner-webapp-pi.vercel.app/api/user?id=" + str(id)
-        url_claim = "https://miner-webapp-pi.vercel.app/api/claim?id=" + str(id)
+        url = f"https://miner-webapp-pi.vercel.app/api/user?id={id}"
+        url_claim = f"https://miner-webapp-pi.vercel.app/api/claim?id={id}"
         res = self.http(url, self.headers)
-        first_name = res.json()["first_name"]
-        balance = res.json()["balance"]
-        last_claim = res.json()["last_claim"]
+        first_name = res.json().get("first_name", "Unknown")
+        balance = res.json().get("balance", "Unknown")
+        last_claim = res.json().get("last_claim", 0)
         self.log(f"{hijau}login as {putih}{first_name}")
         self.log(f"{hijau}balance : {putih}{balance}")
         can_claim = self.next_claim_is(last_claim)
@@ -54,7 +53,7 @@ class ArixDexTod:
             return can_claim
 
         res = self.http(url_claim, self.headers, "")
-        balance = res.json()["balance"]
+        balance = res.json().get("balance", "Unknown")
         self.log(f"{hijau}balance after claim : {putih}{balance}")
         return 3600
 
@@ -79,21 +78,17 @@ class ArixDexTod:
             try:
                 if data is None:
                     res = requests.get(url, headers=headers)
-                    open("http.log","a",encoding="utf-8").write(f"{res.text}\n")
-                    return res
-
-                if data == "":
+                elif data == "":
                     res = requests.post(url, headers=headers)
-                    open("http.log","a",encoding="utf-8").write(f"{res.text}\n")
-                    return res
+                else:
+                    res = requests.post(url, headers=headers, data=data)
 
-                res = requests.post(url, headers=headers, data=data)
-                open("http.log","a",encoding="utf-8").write(f"{res.text}\n")
+                open("http.log", "a", encoding="utf-8").write(f"{res.text}\n")
                 return res
 
             except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
                 self.log(f"{merah}connection error / connection time out !")
-                time.slep(2)
+                time.sleep(2)  # Fixed typo here
                 continue
 
     def main(self):
@@ -126,13 +121,14 @@ class ArixDexTod:
             _end = int(time.time())
             _tot = _end - _start
             _min = min(list_countdown) - _tot
+            print(f"list_countdown: {list_countdown}")
+            print(f"_start: {_start}, _end: {_end}, _tot: {_tot}, _min: {_min}")
             if _min <= 0:
                 continue
 
             self.countdown(_min)
 
-
-if __name__ == "__main__":
+if name == "__main__":
     try:
         ArixDexTod().main()
     except KeyboardInterrupt:
