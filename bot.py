@@ -121,14 +121,12 @@ class ArixDexTod:
             _end = int(time.time())
             _tot = _end - _start
             _min = min(list_countdown) - _tot
-            print(f"list_countdown: {list_countdown}")
-            print(f"_start: {_start}, _end: {_end}, _tot: {_tot}, _min: {_min}")
             if _min <= 0:
                 continue
 
             self.countdown(_min)
 
-if name == "__main__":
+if __name__ == "__main__":
     try:
         ArixDexTod().main()
     except KeyboardInterrupt:
